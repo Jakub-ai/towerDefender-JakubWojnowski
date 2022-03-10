@@ -7,11 +7,14 @@ import javax.swing.JPanel;
 public class GameScreen extends JPanel {
     private Random random;
     private BufferedImage img;
+
     private ArrayList<BufferedImage> atlas = new ArrayList<>();
     public GameScreen(BufferedImage img){
         this.img = img;
         LoadAtlas();
     random = new Random();
+
+
 
     }
 
@@ -41,6 +44,7 @@ public class GameScreen extends JPanel {
         }
 
     }
+
     private int getRandInt(){
         return random.nextInt(30);
     }
