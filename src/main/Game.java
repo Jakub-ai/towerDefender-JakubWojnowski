@@ -1,4 +1,7 @@
 package main;
+import inputs.KeyboardListener;
+import inputs.MyMouseListener;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +16,9 @@ private BufferedImage img;
 private final double FPS_SET = 120.0;
 private final double UPS_SET = 60.0;
 
+private MyMouseListener myMouseListener;
+private KeyboardListener keyboardListener;
+
 
 
 private Thread gameThread;
@@ -22,12 +28,24 @@ private Thread gameThread;
 
       importImg();
 
-        setSize(640, 640);
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         gameScreen = new GameScreen(img);
+
         add(gameScreen);
+        pack();
         setVisible(true);
+    }
+    private void initInputs(){
+        myMouseListener = new MyMouseListener();
+        keyboardListener = new KeyboardListener();
+
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(keyboardListener);
+
+        requestFocus();
     }
 
     private void importImg() {
@@ -52,6 +70,7 @@ private Thread gameThread;
     public static void main(String[] args){
         System.out.println("start Game!!!");
         Game game = new Game();
+        game.initInputs();
         game.start();
 
     }
@@ -65,16 +84,19 @@ private Thread gameThread;
          long lastFrame = System.nanoTime();
         long lastTimeCheck = System.currentTimeMillis();
         long lastUpdate = System.nanoTime();
+        long now;
 
         int frames = 0;
         int updates= 0;
 
         while(true) {
+
+            now = System.nanoTime();
             //Render
-            if (System.nanoTime() - lastFrame >= timePerFrame) {
+            if (now - lastFrame >= timePerFrame) {
 
                 repaint();
-                lastFrame = System.nanoTime();
+                lastFrame = now;
                 frames++;
 
 
@@ -82,7 +104,7 @@ private Thread gameThread;
             //Update
             if(System.nanoTime()- lastUpdate >= timePerUpdate){
                 updateGame();
-                lastUpdate = System.nanoTime();
+                lastUpdate = now;
                 updates++;
 
             }

@@ -7,16 +7,27 @@ import javax.swing.JPanel;
 public class GameScreen extends JPanel {
     private Random random;
     private BufferedImage img;
+    private Dimension size;
 
     private ArrayList<BufferedImage> atlas = new ArrayList<>();
     public GameScreen(BufferedImage img){
         this.img = img;
+
+        SetPanelSize();
         LoadAtlas();
     random = new Random();
 
 
 
     }
+
+    private void SetPanelSize() {
+        size = new Dimension(640, 640);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
+    }
+
 
     private void LoadAtlas() {
         for (int h = 0;  h < 3; h++){
