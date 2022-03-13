@@ -5,22 +5,19 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
 public class GameScreen extends JPanel {
-    private Random random;
-    private BufferedImage img;
+
+    private Game game;
     private Dimension size;
 
-    private ArrayList<BufferedImage> atlas = new ArrayList<>();
-    public GameScreen(BufferedImage img){
-        this.img = img;
+
+
+    public GameScreen(Game game){
+        this.game = game;
+
 
         SetPanelSize();
-        LoadAtlas();
-    random = new Random();
-
-
 
     }
-
     private void SetPanelSize() {
         size = new Dimension(640, 640);
         setMinimumSize(size);
@@ -28,42 +25,11 @@ public class GameScreen extends JPanel {
         setMaximumSize(size);
     }
 
-
-    private void LoadAtlas() {
-        for (int h = 0;  h < 3; h++){
-            for(int w = 0; w < 10; w++ ){
-                atlas.add( img.getSubimage(w * 32, h * 32, 32, 32));
-
-            }
-        }
-    }
-
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-       // g.drawImage(atlas.get(27),0,0,null);
-   /* BufferedImage z = img.getSubimage(32*0,32,32,32);
-    g.drawImage(z,0,0,null);*/
+        game.getRender().render(g);
 
-
-      for(int y = 0; y < 20; y++){
-       for(int x = 0; x < 20; x++){
-           g.drawImage(atlas.get(getRandInt()),x*32, y*32, null );
-
-       }
-
-        }
-
-    }
-
-    private int getRandInt(){
-        return random.nextInt(30);
-    }
-    private Color getRndColor(){
-        int r = random.nextInt(255);
-        int g = random.nextInt(255);
-        int b = random.nextInt(255);
-        return new Color(r,g,b);
     }
 
 }
