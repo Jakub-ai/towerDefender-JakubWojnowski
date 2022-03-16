@@ -36,7 +36,7 @@ public class Menu extends GameScene implements SceneMethods {
     }
 
     private void importImg() {
-        InputStream is = getClass().getResourceAsStream("atlas.png");
+        InputStream is = getClass().getResourceAsStream("/atlas.png");
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {
@@ -45,7 +45,7 @@ public class Menu extends GameScene implements SceneMethods {
     }
 
     private void LoadAtlas() {
-        for (int h = 0;  h < 3; h++){
+        for (int h = 0;  h < 4; h++){
             for(int w = 0; w < 10; w++ ){
                 atlas.add( img.getSubimage(w * 32, h * 32, 32, 32));
 
