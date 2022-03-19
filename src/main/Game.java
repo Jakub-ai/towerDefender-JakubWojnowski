@@ -20,8 +20,7 @@ private Thread gameThread;
 private final double FPS_SET = 120.0;
 private final double UPS_SET = 60.0;
 
-private MyMouseListener myMouseListener;
-private KeyboardListener keyboardListener;
+
 //Classes
     private Render render;
     private Menu menu;
@@ -50,16 +49,7 @@ private KeyboardListener keyboardListener;
 
     }
 
-    private void initInputs(){
-        myMouseListener = new MyMouseListener();
-        keyboardListener = new KeyboardListener();
 
-        addMouseListener(myMouseListener);
-        addMouseMotionListener(myMouseListener);
-        addKeyListener(keyboardListener);
-
-        requestFocus();
-    }
 
 
     private void start(){
@@ -76,7 +66,7 @@ private KeyboardListener keyboardListener;
     public static void main(String[] args){
         System.out.println("start Game!!!");
         Game game = new Game();
-        game.initInputs();
+        game.gameScreen.initInputs();
         game.start();
 
     }
