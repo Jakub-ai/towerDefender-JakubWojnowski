@@ -60,6 +60,11 @@ public class Settings extends GameScene implements SceneMethods{
 
     }
 
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
+
     private void resetButtons() {
         bMenu.resetBooleans();
     }

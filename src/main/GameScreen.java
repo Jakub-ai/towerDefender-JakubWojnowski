@@ -34,7 +34,7 @@ public class GameScreen extends JPanel {
         requestFocus();
     }
     private void SetPanelSize() {
-        size = new Dimension(640, 640);
+        size = new Dimension(640, 740);
         setMinimumSize(size);
         setPreferredSize(size);
         setMaximumSize(size);

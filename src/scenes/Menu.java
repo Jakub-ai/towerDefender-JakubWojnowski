@@ -41,7 +41,7 @@ public class Menu extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.black);
+        g.setColor(Color.WHITE);
         g.fillRect(0,0,640,640);
    drawButtons(g);
 
@@ -87,6 +87,11 @@ public class Menu extends GameScene implements SceneMethods {
     @Override
     public void mouseReleased(int x, int y) {
         resetButtons();
+
+    }
+
+    @Override
+    public void mouseDragged(int x, int y) {
 
     }
 
