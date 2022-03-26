@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import UI.BottomBar;
 import helpz.LevelBuilder;
+import helpz.LoadSave;
 import main.Game;
 import managers.TileManager;
 import UI.MyButton;
@@ -29,10 +30,33 @@ public class Playing extends GameScene implements SceneMethods{
         lvl = LevelBuilder.getlevelData();
         tileManager = new TileManager();
         bottomBar = new BottomBar(0,640,640, 100, this);
-        //The LVL
-        //Tile manager
+
+/*
+        LoadSave.CreateFile();
+*/
+        //LoadSave.WriteToFile();
+
+        //LoadSave.ReadFromFile();
+
+        createDefaultLevel();
+        loadDefaultLevel();
     }
 
+    public void saveLevel(){
+        LoadSave.SaveLevel("New_Level", lvl);
+    }
+
+    private void loadDefaultLevel() {
+        lvl = LoadSave.GetLevelData("New_Level");
+    }
+
+    private void createDefaultLevel() {
+
+        int [] arr = new int[400];
+        for(int i = 0; i < arr.length; i++)
+            arr[i] = 0;
+        LoadSave.CreateLevel("New_Level", arr);
+    }
 
 
     @Override
