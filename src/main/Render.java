@@ -23,16 +23,18 @@ public class Render {
         switch(GameStates.gameState){
             case MENU:
                 game.getMenu().render(g);
-
-
                 break;
+
             case PLAYING:
                 game.getPlaying().render(g);
-
                 break;
+
             case SETTINGS:
                 game.getSettings().render(g);
+                break;
 
+            case EDIT:
+                game.getEditor().render(g);
                 break;
 
         }

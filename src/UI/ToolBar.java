@@ -1,34 +1,28 @@
 package UI;
 
-import objects.Tile;
-import scenes.Playing;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
 
-public class BottomBar {
-    private int  x, y, width, height;
-    private Playing playing;
-    private MyButton bMenu, bSave;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import objects.Tile;
+import scenes.Editing;
+
+public class ToolBar extends Bar {
+    private  Editing editing;
+    private MyButton bMenu, bSave;
     private Tile selectedTile;
 
-private ArrayList<MyButton> tileButtons = new ArrayList<>();
+    private ArrayList<MyButton> tileButtons = new ArrayList<>();
 
-    public BottomBar(int  x, int y, int width, int height, Playing playing ) {
-
-       this.x = x;
-       this.y = y;
-       this.height = height;
-       this.width = width;
-       this.playing = playing;
+    public ToolBar(int x, int y, int width, int height, Editing editing) {
+        super(x, y, width, height);
+        this.editing = editing;
         initButtons();
-   }
-
+    }
     private void initButtons() {
         bMenu = new MyButton("Menu", 2, 642, 100, 30);
         bSave = new MyButton("Save", 2, 674, 100, 30);
@@ -39,16 +33,27 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
         int yStart=650;
         int xOffset = (int) (w * 1.1f);
 
-        int i =0;
-        for (Tile tile : playing.getTileManager().tiles) {
+        int i = 0;
+        for (Tile tile : editing.getGame().getTileManager().tiles) {
             tileButtons.add(new MyButton(tile.getName(), xStart + xOffset * i, yStart,w, h,i));
             i++;
 
         }
-    }
-    private void saveLevel(){
-        playing.saveLevel();
 
+    }
+
+    private void saveLevel(){
+        editing.saveLevel();
+
+    }
+    public void draw(Graphics g){
+
+        //background
+        g.setColor(new Color(220,123,14));
+        g.fillRect(x, y, width, height);
+
+        //button
+        drawButtons(g);
     }
 
     private void drawButtons(Graphics g) {
@@ -77,7 +82,7 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
             //Mouseover
             if(b.isMouseOver())
                 g.setColor(Color.WHITE);
-             else
+            else
                 g.setColor((Color.BLACK));
 
             //Border
@@ -92,24 +97,10 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
 
 
         }
-        }
-
-
-
-    public BufferedImage getButtImg(int id){
-       return playing.getTileManager().getSprite(id);
     }
-
-    public void draw(Graphics g){
-
-        //background
-       g.setColor(new Color(220,123,14));
-       g.fillRect(x, y, width, height);
-
-       //buttom
-    drawButtons(g);
-}
-
+    public BufferedImage getButtImg(int id){
+        return editing.getGame().getTileManager().getSprite(id);
+    }
 
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
@@ -119,8 +110,8 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
         else{
             for(MyButton b : tileButtons){
                 if(b.getBounds().contains(x,y)){
-                    selectedTile = playing.getTileManager().getTile(b.getId());
-                    playing.setSelectedTile(selectedTile);
+                    selectedTile = editing.getGame().getTileManager().getTile(b.getId());
+                    editing.setSelectedTile(selectedTile);
                     return;
                 }
             }
@@ -128,13 +119,11 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
 
     }
 
-
-
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
         bSave.setMouseOver(false);
-            for(MyButton b : tileButtons)
-                b.setMouseOver(false);
+        for(MyButton b : tileButtons)
+            b.setMouseOver(false);
 
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMouseOver(true);
@@ -152,12 +141,11 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
 
     }
 
-
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMousePressed(true);
         else if(bSave.getBounds().contains(x, y))
-                bSave.setMousePressed(true);
+            bSave.setMousePressed(true);
         else {
             for (MyButton b : tileButtons) {
                 if (b.getBounds().contains(x, y)) {
@@ -169,7 +157,6 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
         }
     }
 
-
     public void mouseReleased(int x, int y) {
         bMenu.resetBooleans();
         bSave.resetBooleans();
@@ -177,4 +164,5 @@ private ArrayList<MyButton> tileButtons = new ArrayList<>();
             b.resetBooleans();
 
     }
+
 }

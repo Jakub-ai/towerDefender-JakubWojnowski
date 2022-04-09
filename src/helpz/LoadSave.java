@@ -22,7 +22,7 @@ public class LoadSave {
 
     //txt file
     public static void CreateFile(){
-        File txtFile = new File("res/new level.txt");
+        File txtFile = new File("res/new_level.txt");
 
         try {
             txtFile.createNewFile();
