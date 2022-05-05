@@ -9,9 +9,11 @@ import main.Game;
 import objects.Tile;
 import UI.ToolBar;
 
-
 public class Editing extends GameScene implements SceneMethods{
 
+    private  int ANIMATION_SPEED = 25;
+    private int animationIndex;
+    private int tick = 0;
 
     private int[][] lvl;
 
@@ -33,22 +35,45 @@ public class Editing extends GameScene implements SceneMethods{
 
     @Override
     public void render(Graphics g) {
-
+        updateTick();
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
 
     }
+
+    private void updateTick() {
+        tick ++;
+        if(tick >= ANIMATION_SPEED){
+            tick = 0;
+            animationIndex++;
+            if(animationIndex >= 4){
+                animationIndex = 0;
+            }
+        }
+    }
+
     private void drawLevel(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
+                if(isAnimation(id)){
+                    g.drawImage(getSprite(id,animationIndex), x * 32, y * 32, null);
+                }else
                 g.drawImage(getSprite(id), x * 32, y * 32, null);
             }
         }
     }
+
+    private boolean isAnimation(int spriteID) {
+        return game.getTileManager().isSpriteAnimation(spriteID);
+    }
+
     private BufferedImage getSprite(int spriteID) {
         return game.getTileManager().getSprite(spriteID);
+    }
+    private BufferedImage getSprite(int spriteID, int animationIndex) {
+        return game.getTileManager().getAniSprite(spriteID,animationIndex);
     }
 
     public void saveLevel(){
