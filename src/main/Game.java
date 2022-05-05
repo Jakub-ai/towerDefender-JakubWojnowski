@@ -69,7 +69,18 @@ private final double UPS_SET = 60.0;
 
     private void updateGame() {
 
-        //System.out.println("Game Updated");
+       switch(GameStates.gameState){
+
+           case PLAYING:
+               playing.update();
+               break;
+           case MENU:
+               break;
+           case SETTINGS:
+               break;
+           case EDIT:
+               break;
+       }
     }
 
     public static void main(String[] args){
