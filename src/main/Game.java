@@ -79,6 +79,7 @@ private final double UPS_SET = 60.0;
            case SETTINGS:
                break;
            case EDIT:
+               editing.update();
                break;
        }
     }
