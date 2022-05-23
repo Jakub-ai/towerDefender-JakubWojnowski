@@ -6,6 +6,20 @@ public class Constants {
         public static final int ARCHER = 1;
         public static final int MAGE = 2;
         public static final int BAZOOKA = 3;
+
+        public static String GetName(int towerType){
+            switch (towerType){
+                case CANNON:
+                    return "CANNON";
+                case ARCHER:
+                    return "ARCHER";
+                case MAGE:
+                    return "MAGE";
+                case BAZOOKA:
+                    return "BAZOOKA";
+            }
+            return "";
+        }
     }
     public static class Directions{
         public static final int LEFT = 0;

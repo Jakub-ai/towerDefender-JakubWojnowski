@@ -9,8 +9,10 @@ import main.Game;
 import managers.EnemyManager;
 import managers.TowerManager;
 import objects.PathPoint;
+import objects.Tower;
 
 import static helpz.Constants.Enemies.GHOST;
+import static helpz.Constants.Tiles.GRASS_TILE;
 
 
 public class Playing extends GameScene implements SceneMethods{
@@ -23,6 +25,7 @@ public class Playing extends GameScene implements SceneMethods{
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private PathPoint start,end;
+    private Tower selectedTower;
 
 
     public Playing(Game game) {
@@ -49,13 +52,26 @@ public class Playing extends GameScene implements SceneMethods{
         enemyManager.update();
         towerManager.update();
     }
+    public void setSelectedTower(Tower selectedTower) {
+        this.selectedTower = selectedTower;
+
+    }
     @Override
     public void render(Graphics g) {
         drawLevel(g);
         actionBar.draw(g);
         enemyManager.draw(g);
         towerManager.draw(g);
+        drawSelectedTower(g);
     }
+
+    private void drawSelectedTower(Graphics g) {
+        if(selectedTower != null) {
+            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
+        }
+
+    }
+
     private void drawLevel(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
@@ -84,8 +100,32 @@ public class Playing extends GameScene implements SceneMethods{
 
         if(y >= 640)
             actionBar.mouseClicked(x,y);
-        else
-            enemyManager.addEnemy(GHOST);
+        else{
+            if(selectedTower != null){
+                if(isTleGrass(mouseX,mouseY)) {
+                    if (getTowerAt(mouseX, mouseY) == null) {
+                        towerManager.addTower(selectedTower, mouseX, mouseY);
+                        selectedTower = null;
+                    }
+                }
+            }else{
+                //get tower if exist
+                Tower t = getTowerAt(mouseX,mouseY);
+                    actionBar.displayedTower(t);
+            }
+        }
+
+
+    }
+
+    private Tower getTowerAt(int x, int y) {
+        return towerManager.getTowerAt(x,y);
+    }
+
+    private boolean isTleGrass(int x, int y) {
+    int id = lvl[y/32][x/32];
+    int tileType = game.getTileManager().getTile(id).getTileType();
+    return tileType == GRASS_TILE;
 
     }
 
@@ -116,6 +156,10 @@ public class Playing extends GameScene implements SceneMethods{
     public void mouseDragged(int x, int y) {
 
 
+    }
+
+    public TowerManager getTowerManager() {
+        return towerManager;
     }
 
 
