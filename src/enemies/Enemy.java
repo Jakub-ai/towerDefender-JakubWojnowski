@@ -1,16 +1,20 @@
 package enemies;
 
+import helpz.Constants;
+
 import java.awt.*;
 
 import static helpz.Constants.Directions.*;
 
 public abstract class Enemy {
-    private float x, y;
-    private Rectangle bounds;
-    private int health;
-    private int ID;
-    private int enemyType;
-    private int lastDir;
+    protected float x, y;
+    protected Rectangle bounds;
+    protected int health;
+    protected int ID;
+    protected int enemyType;
+    protected int lastDir;
+    protected int maxHealth;
+    protected boolean alive = true;
 
     public Enemy(float x, float y, int ID, int enemyType) {
         this.x = x;
@@ -19,8 +23,17 @@ public abstract class Enemy {
         this.enemyType = enemyType;
         bounds = new Rectangle((int) x, (int) y, 32, 32);
         lastDir = -1;
+        setStartHealth();
     }
-
+private void setStartHealth(){
+        health = Constants.Enemies.GetStartHealth(enemyType);
+        maxHealth = health;
+}
+public void hurt(int dmg){
+        this.health -= dmg;
+        if(health <= 0)
+            alive = false;
+}
     public void move(float speed, int dir) {
         lastDir = dir;
        switch(dir){
@@ -38,11 +51,21 @@ public abstract class Enemy {
                break;
 
        }
+       updateHitBox();
     }
+
+    private void updateHitBox() {
+        bounds.x = (int) x;
+        bounds.y = (int) y;
+    }
+
     public void setPos(int x, int y){
         //to pass the enemy position, this one is for posFix
         this.x = x;
         this.y = y;
+    }
+    public float getHealthBarFloat(){
+        return health / (float) maxHealth;
     }
 
 
@@ -72,5 +95,9 @@ public abstract class Enemy {
 
     public int getLastDir() {
 return lastDir;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

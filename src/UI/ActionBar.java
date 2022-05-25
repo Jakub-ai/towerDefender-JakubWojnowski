@@ -75,10 +75,26 @@ public class ActionBar extends Bar{
             g.drawString(""+ Constants.Towers.GetName(displayedTower.getTowerType()),490,660);
             g.drawString("ID: "+ displayedTower.getId(),490,675);
 
+            drawDisplayedTowerBorder(g);
+
+            drawDisplayedTowerRange(g);
+
         }
 
     }
 
+    private void drawDisplayedTowerRange(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawOval(displayedTower.getX() + 16 - (int) (displayedTower.getRange()*2) / 2,displayedTower.getY() + 16 - (int)(displayedTower.getRange()*2) /2,(int)displayedTower.getRange()*2,(int)displayedTower.getRange()* 2);
+    }
+
+    //ta metoda zmienia kolor granic wiezy po jej wybraniu. dzieki czemu wiemy ktora wieze wybralismy z mapy
+    private void drawDisplayedTowerBorder(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawRect(displayedTower.getX(), displayedTower.getY(), 32,32);
+    }
+
+    // w ta metoda przechowuje wieze ktora wybralismy w sekwencji playing i jest przesylana do Actionbar dzieki czemu mozemy ją uzyc w innych metodach
     public void displayedTower(Tower t) {
         displayedTower = t;
     }

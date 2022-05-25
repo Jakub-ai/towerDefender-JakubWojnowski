@@ -1,5 +1,6 @@
 package managers;
 
+import enemies.Enemy;
 import helpz.LoadSave;
 import objects.Tower;
 import scenes.Playing;
@@ -31,13 +32,43 @@ public class TowerManager {
             towerImgs[i] = atlas.getSubimage((5 + i) * 32, 32,32,32);
     }
     public void addTower(Tower selectedTower, int xPos, int yPos) {
+
         towers.add(new Tower(xPos,yPos,TowerAmount++,selectedTower.getTowerType()));
 
 
     }
     public void update(){
+        for (Tower t : towers) {
+            t.update();
+            attackEnemyIfClose(t);
+        }
 
     }
+    private Boolean isEnemyInRange(Tower t, Enemy e){
+        int range = helpz.Utilz.GetHypoDistance(t.getX(),t.getY(),e.getX(),e.getY());
+        return range < t.getRange();
+
+    }
+
+    private void attackEnemyIfClose(Tower t) {
+
+        for (Enemy e : playing.getEnemyManager().getEnemies()){
+            if(e.isAlive())
+            if(isEnemyInRange(t, e)){
+                if(t.isCoolDownOver()) {
+                    playing.shootEnemy(t, e);
+                    t.resetCoolDown();
+                }
+                //shoot enemy
+
+            }else{
+                //no shooting
+            }
+        }
+
+        }
+
+
     public void draw(Graphics g){
        // g.drawImage(towerImgs[BAZOOKA],tower.getX(), tower.getY(), null);
         for (Tower t : towers)

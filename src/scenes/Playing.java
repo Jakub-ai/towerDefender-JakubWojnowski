@@ -1,12 +1,15 @@
 package scenes;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import UI.ActionBar;
+import enemies.Enemy;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyManager;
+import managers.ProjectileManager;
 import managers.TowerManager;
 import objects.PathPoint;
 import objects.Tower;
@@ -26,6 +29,7 @@ public class Playing extends GameScene implements SceneMethods{
     private TowerManager towerManager;
     private PathPoint start,end;
     private Tower selectedTower;
+    private ProjectileManager projManager;
 
 
     public Playing(Game game) {
@@ -34,6 +38,7 @@ public class Playing extends GameScene implements SceneMethods{
         actionBar = new ActionBar(0,640,640, 160, this);
         enemyManager = new EnemyManager(this, start, end);
         towerManager = new TowerManager(this);
+        projManager = new ProjectileManager(this);
 
     }
 
@@ -51,11 +56,13 @@ public class Playing extends GameScene implements SceneMethods{
         updateTick();
         enemyManager.update();
         towerManager.update();
+        projManager.update();
     }
     public void setSelectedTower(Tower selectedTower) {
         this.selectedTower = selectedTower;
 
     }
+    //metoda sluzy do renderowania obiektow w mojej sekwencji playing
     @Override
     public void render(Graphics g) {
         drawLevel(g);
@@ -63,15 +70,22 @@ public class Playing extends GameScene implements SceneMethods{
         enemyManager.draw(g);
         towerManager.draw(g);
         drawSelectedTower(g);
+        drawHighLight(g);
+        projManager.draw(g);
     }
-
+//metoda podswietla kwadrat pod ktorym znajduje sie kursor
+    private void drawHighLight(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.drawRect(mouseX,mouseY, 32,32);
+    }
+//metoda dzieki ktorej stawiami wieze w wybranym oprzez nas miejscu
     private void drawSelectedTower(Graphics g) {
         if(selectedTower != null) {
             g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
         }
 
     }
-
+//metoda kktora rysuje mape
     private void drawLevel(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
@@ -83,6 +97,7 @@ public class Playing extends GameScene implements SceneMethods{
             }
         }
     }
+    //metoda okreslajaca charakterystyke danej textury(tile)
     public int getTileType(int x, int y) {
         int xCord = x / 32;
         int yCord = y / 32;
@@ -94,7 +109,7 @@ public class Playing extends GameScene implements SceneMethods{
        return game.getTileManager().getTile(id).getTileType();
 
     }
-
+//metoda sluzaca
     @Override
     public void mouseClicked(int x, int y) {
 
@@ -128,6 +143,12 @@ public class Playing extends GameScene implements SceneMethods{
     return tileType == GRASS_TILE;
 
     }
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            selectedTower = null;
+        }
+    }
+
 
     @Override
     public void mouseMoved(int x, int y) {
@@ -162,5 +183,11 @@ public class Playing extends GameScene implements SceneMethods{
         return towerManager;
     }
 
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
 
+    public void shootEnemy(Tower t, Enemy e) {
+        projManager.newProjectile(t,e);
+    }
 }
