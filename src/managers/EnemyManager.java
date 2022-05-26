@@ -20,20 +20,27 @@ public class EnemyManager {
     //private float speed = 0.5f;
     private PathPoint start,end;
     private int HpBarWidth = 20;
+    private BufferedImage slowEffect;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end) {
         this.playing = playing;
         this.start = start;
         this.end = end;
-        addEnemy( GHOST);
-        addEnemy( BAT);
-        addEnemy( SKELETON);
-        addEnemy( KNIGHT);
+        loadEffectImg();
+//        addEnemy( GHOST);
+//        addEnemy( BAT);
+//        addEnemy( SKELETON);
+//        addEnemy( KNIGHT);
+
         enemyImgs = new BufferedImage[4];
        // testEnemy = new Enemy(32*3, 32*9,0,0);
 
 
         loadEnemyImgs();
+    }
+
+    private void loadEffectImg() {
+        slowEffect = LoadSave.getSpriteAtlas().getSubimage(9*32, 3*32,32,32);
     }
 
     private void loadEnemyImgs() {
@@ -54,10 +61,9 @@ public class EnemyManager {
 
     }
 
+
+
     private void updateEnemyMove(Enemy e) {
-        //e pos
-        //e dir
-        //tile at new possible pos
         if (e.getLastDir() == -1)
             setNewDirectionAndMove(e);
 
@@ -69,7 +75,9 @@ public class EnemyManager {
             e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         }else if(isAtEnd(e)){
             // reachead the end
-            System.out.println("lives lost");
+          e.kill();
+          playing.removeOneLive();
+
 
         }else{
             //find new direction
@@ -156,22 +164,26 @@ public class EnemyManager {
         return 0;
 
     }
+    public void spawnEnemy(int nextEnemy) {
+        addEnemy(nextEnemy);
+
+    }
 
     public void addEnemy( int enemyType){
         int x = start.getxCord() * 32;
         int y = start.getyCord() * 32;
         switch (enemyType){
             case GHOST:
-                enemies.add(new Ghost(x, y,0));
+                enemies.add(new Ghost(x, y,0,this));
                 break;
             case KNIGHT:
-                enemies.add(new Knight(x, y,0));
+                enemies.add(new Knight(x, y,0,this));
                 break;
             case BAT:
-                enemies.add(new Bat(x, y,0));
+                enemies.add(new Bat(x, y,0,this));
                 break;
             case SKELETON:
-                enemies.add(new Skeleton(x, y,0));
+                enemies.add(new Skeleton(x, y,0,this));
                 break;
 
 
@@ -183,10 +195,19 @@ public class EnemyManager {
             if(e.isAlive()) {
                 drawEnemy(e, g);
                 drawHealthBar(e, g);
+                drawEffects(e, g);
             }
         }
 
     }
+
+    private void drawEffects(Enemy e, Graphics g) {
+        if(e.isSlow()){
+
+            g.drawImage(slowEffect, (int)e.getX(), (int)e.getY(), null);
+        }
+    }
+
 
     private void drawHealthBar(Enemy e, Graphics g) {
         g.setColor(Color.RED);
@@ -203,5 +224,21 @@ public class EnemyManager {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+
+    public int getAmountofAliveEnemies() {
+        int size = 0;
+        for( Enemy e : enemies)
+            if(e.isAlive())
+                size++;
+        return size;
+    }
+
+    public void rewardPlayer(int enemyType) {
+        playing.rewardPlayer(enemyType);
+    }
+    public void reset(){
+        enemies.clear();
     }
 }

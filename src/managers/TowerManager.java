@@ -15,10 +15,11 @@ public class TowerManager {
     private Playing playing;
     private BufferedImage[] towerImgs;
     private ArrayList<Tower> towers = new ArrayList<>();
-    private int TowerAmount = 0;
+    private int towerAmount = 0;
 
     public TowerManager(Playing playing) {
         this.playing = playing;
+
         loadTowerImgs();
 
     }
@@ -33,7 +34,23 @@ public class TowerManager {
     }
     public void addTower(Tower selectedTower, int xPos, int yPos) {
 
-        towers.add(new Tower(xPos,yPos,TowerAmount++,selectedTower.getTowerType()));
+        towers.add(new Tower(xPos,yPos,towerAmount++,selectedTower.getTowerType()));
+
+
+    }
+
+    public void removeTower(Tower displayedTower) {
+        for(int i =0; i < towers.size();i++){
+            if(towers.get(i).getId() == displayedTower.getId())
+                towers.remove(i);
+        }
+
+
+    }
+    public void upgradeTower(Tower displayedTower) {
+        for(Tower t : towers)
+            if(t.getId() == displayedTower.getId())
+                t.upgradeTower();
 
 
     }
@@ -87,5 +104,11 @@ public class TowerManager {
                     return t;
         return null;
     }
+
+public void reset(){
+        towers.clear();
+        towerAmount = 0;
+
+}
 
 }

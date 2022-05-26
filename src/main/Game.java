@@ -5,10 +5,7 @@ import helpz.LoadSave;
 import inputs.KeyboardListener;
 import inputs.MyMouseListener;
 import managers.TileManager;
-import scenes.Editing;
-import scenes.Menu;
-import scenes.Playing;
-import scenes.Settings;
+import scenes.*;
 
 
 public class Game extends JFrame implements Runnable{
@@ -25,6 +22,7 @@ private final double UPS_SET = 60.0;
     private Playing playing;
     private Settings settings;
     private Editing editing;
+    private GameOver gameOver;
 
     private TileManager tileManager;
 
@@ -58,6 +56,8 @@ private final double UPS_SET = 60.0;
         playing = new Playing(this);
         settings = new Settings(this);
         editing = new Editing(this);
+        gameOver = new GameOver(this);
+
 
     }
 
@@ -166,4 +166,7 @@ private final double UPS_SET = 60.0;
         return tileManager;
     }
 
+    public GameOver getGameOver() {
+        return gameOver;
+    }
 }

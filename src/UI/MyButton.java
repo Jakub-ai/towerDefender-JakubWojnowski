@@ -47,7 +47,7 @@ public class MyButton {
         g.setColor(Color.BLACK);
         g.drawRect(x,y,width,height);
       if(mouseOver){
-            g.setColor(Color.RED);
+            g.setColor(new Color(86,66,255));
             g.drawRect(x + 1, y + 1, width - 2, height - 2 );
             g.drawRect(x + 2, y + 2, width - 4, height - 4 );
         }
@@ -56,7 +56,7 @@ public class MyButton {
 
     private void drawBody(Graphics g) {
 
-        g.setColor(Color.BLUE);
+        g.setColor(new Color(86,66,54));
 
       /*  if(mouseOver) {
             g.setColor(Color.GRAY);
@@ -70,6 +70,9 @@ public class MyButton {
     public void resetBooleans(){
         this.mouseOver = false;
         this.mousePressed = false;
+    }
+    public void setText(String text){
+        this.text = text;
     }
     public void setMousePressed(boolean mousePressed){
         this.mousePressed = mousePressed;

@@ -9,13 +9,13 @@ public class Constants {
         public static float GetSpeed (int type){
             switch (type){
                 case Arrow:
-                    return 3f;
+                    return 8f;
                 case  BOMB:
-                    return 1f;
-                case MISSLE:
-                    return 2f;
-                case CHAINS:
                     return 4f;
+                case MISSLE:
+                    return 10f;
+                case CHAINS:
+                    return 6f;
             }
             return 0f;
         }
@@ -27,6 +27,20 @@ public class Constants {
         public static final int MAGE = 2;
         public static final int BAZOOKA = 3;
 
+        public static int GetTowerCost(int towerType){
+            switch (towerType){
+                case CANNON:
+                    return 65;
+                case ARCHER:
+                    return 20;
+                case MAGE:
+                    return 45;
+                case BAZOOKA:
+                    return 80;
+            }
+            return 0;
+
+        }
         public static String GetName(int towerType){
             switch (towerType){
                 case CANNON:
@@ -43,13 +57,13 @@ public class Constants {
         public static int GetStartDamage(int towerType){
             switch (towerType){
                 case CANNON:
-                    return 25;
-                case ARCHER:
-                    return 1;
-                case MAGE:
                     return 40;
+                case ARCHER:
+                    return 15;
+                case MAGE:
+                    return 5;
                 case BAZOOKA:
-                    return 80;
+                    return 10;
             }
             return 0;
 
@@ -57,13 +71,13 @@ public class Constants {
         public static float GetDefaultRange(int towerType){
             switch (towerType){
                 case CANNON:
-                    return 100;
+                    return 200;
                 case ARCHER:
-                    return 100;
+                    return 125;
                 case MAGE:
-                    return 101;
+                    return 130;
                 case BAZOOKA:
-                    return 104;
+                    return 150;
             }
             return 0;
 
@@ -71,13 +85,13 @@ public class Constants {
         public static float GetDefaultCoolDown(int towerType){
             switch (towerType){
                 case CANNON:
-                    return 10;
+                    return 120;
                 case ARCHER:
-                    return 11;
+                    return 20;
                 case MAGE:
-                    return 12;
+                    return 35;
                 case BAZOOKA:
-                    return 13;
+                    return 25;
             }
             return 0;
         }
@@ -101,6 +115,22 @@ public class Constants {
         public static final int BAT = 2;
         public static final int SKELETON = 3;
 
+        public static int GetReward(int enemyType){
+
+            switch(enemyType){
+                case GHOST:
+                    return 10 ;
+                case KNIGHT:
+                    return 30;
+                case BAT:
+                    return  5;
+                case SKELETON:
+                    return 20;
+            }
+            return 0;
+
+        }
+
         public static float GetSpeed(int enemyType){
             switch(enemyType){
                 case GHOST:
@@ -119,13 +149,13 @@ public class Constants {
         public static int GetStartHealth(int enemyType) {
             switch(enemyType){
                 case GHOST:
-                    return 100 ;
+                    return 300 ;
                 case KNIGHT:
-                    return 300;
+                    return 800;
                 case BAT:
-                    return  50;
+                    return  100;
                 case SKELETON:
-                    return 80;
+                    return 600;
             }
             return 0;        }
     }
