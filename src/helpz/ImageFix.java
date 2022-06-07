@@ -2,9 +2,9 @@ package helpz;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+/** klasa imageFix okresla charakterystyke wszystkich textur uzytych w grze **/
 public class ImageFix {
-
+/** metoda getRotImg obraca texture, na przyklad metoda ta sluzy do obracania textury z poziomej drogi na pionowa droge **/
 public static BufferedImage getRotImg(BufferedImage img, int rotAngle){
     int w = img.getWidth();
     int h = img.getHeight();
@@ -20,6 +20,7 @@ public static BufferedImage getRotImg(BufferedImage img, int rotAngle){
 
 
 }
+
 public static BufferedImage buildImg(BufferedImage[] imgs){
 
     int w = imgs[0].getWidth();
@@ -56,6 +57,8 @@ for( int i =0; i < imgs.length; i++ ){
     return newImg;
 }
 //rotates second image + animations
+    /** metoda getBuildRotImg obraca nam drugi obrazek textury oraz dodaje animacje.
+     * @return  arr **/
     public static BufferedImage[] getBuildRotImg(BufferedImage[] imgs, BufferedImage secondImage, int rotAngle ){
         int w = imgs[0].getWidth();
         int h = imgs[0].getHeight();

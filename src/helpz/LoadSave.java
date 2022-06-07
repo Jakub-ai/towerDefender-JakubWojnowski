@@ -8,9 +8,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/** klasa LoadSave sluzy do ladowania zpisanej mapy w trybie edycji **/
 public class LoadSave {
-
+/** metoda getSpriteAtlas sluzy do pobierania pliku atlas.png w ktorym sa wszystkie textury
+ * @return img **/
     public static BufferedImage getSpriteAtlas(){
         BufferedImage img = null;
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("atlas.png");
@@ -23,7 +24,6 @@ public class LoadSave {
 
     }
 
-    //txt file
     public static void CreateFile(){
         File txtFile = new File("res/new_level.txt");
 
@@ -33,7 +33,9 @@ public class LoadSave {
             e.printStackTrace();
         }
     }
-
+    /** metoda CreateFile  tworzy plik new_level.txt w ktory jest zapisana mapa zaprojektowana w trybie edit
+     * @param  "String name, int [] idArr
+     * @return nic nie zwraca**/
     public static void CreateLevel(String name, int [] idArr){
 
         File newLevel = new File("res/" + name + ".txt");
@@ -53,7 +55,9 @@ public class LoadSave {
 
 
     }
-
+/** WriteToFile metoda ta edytuje plik txt dzieki czemu zapisuje zmiany mapy jakie dokonano poprzez tryb edycji
+ * @param " f, int [] idArr, PathPoint start, PathPoint end"
+ * @return nic nie zwraca**/
     private static void WriteToFile(File f, int [] idArr, PathPoint start, PathPoint end ){
 
         try {
@@ -75,6 +79,12 @@ public class LoadSave {
         }
 
     }
+
+    /**
+     * metoda SaveLevel
+     * @param " name, idArr, start, end "
+     * @return nic nie zwraca
+     */
     public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end){
         File levelFile = new File("res/" + name + ".txt");
 
@@ -88,6 +98,11 @@ public class LoadSave {
 
     }
 
+    /**
+     * metoda ReadFromFile sluzy do przeskanowania pliku z mapa
+     * @param file
+     * @return
+     */
 
     private static ArrayList <Integer> ReadFromFile(File file){
         ArrayList <Integer> list = new ArrayList<>();
@@ -104,6 +119,12 @@ public class LoadSave {
         return  list;
 
     }
+
+    /**
+     * metoda GetLevelPathPoints sluzy do zapisywania punktow poczatku i konca obiektow typu enemy
+     * @param name
+     * @return
+     */
     public static ArrayList<PathPoint> GetLevelPathPoints(String name){
         File lvlFile = new File("res/" + name + ".txt");
         if(lvlFile.exists()){
@@ -121,6 +142,11 @@ public class LoadSave {
         }
     }
 
+    /**
+     * metoda zwraca zapisany plik mapy
+     * @param name
+     * @return Utilz.ArrayListTo2dint, null
+     */
     public static int [][] GetLevelData(String name ){
 
         File lvlFile = new File("res/" + name + ".txt");

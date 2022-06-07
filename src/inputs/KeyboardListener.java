@@ -8,9 +8,16 @@ import static main.GameStates.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/** KeyboardListener jest to klasa w ktorej sa wszystkie metody zwiazane z przyciskami na klawiaturze
+ *
+ */
 public class KeyboardListener implements KeyListener {
     private Game game;
 
+    /**
+     * konstruktor klasy KeyboardListener
+     * @param game
+     */
     public KeyboardListener(Game game) {
         this.game = game;
     }
@@ -20,6 +27,10 @@ public class KeyboardListener implements KeyListener {
 
     }
 
+    /** keyPressed rozdziela w jakiej sekwencja jest uzyta metoda
+     * metoda
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(GameStates.gameState == EDIT)

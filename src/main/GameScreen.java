@@ -7,6 +7,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
+
+/** klasa GameScreen klasa okresla charakterystyke okno programu
+ *
+ */
 public class GameScreen extends JPanel {
 
     private Game game;
@@ -15,6 +19,10 @@ public class GameScreen extends JPanel {
     private MyMouseListener myMouseListener;
     private KeyboardListener keyboardListener;
 
+    /** konstruktor klasy GameScreen
+     *
+     * @param game
+     */
     public GameScreen(Game game){
         this.game = game;
 
@@ -23,6 +31,9 @@ public class GameScreen extends JPanel {
 
     }
 
+    /** metoda initInputs inicjuje inputy
+     * @return nic nie zwraca
+     */
     public void initInputs(){
         myMouseListener = new MyMouseListener(game);
         keyboardListener = new KeyboardListener(game);
@@ -33,6 +44,10 @@ public class GameScreen extends JPanel {
 
         requestFocus();
     }
+
+    /** SetPanelSize ustala wielkosc okna
+     * @return nic nie zwraca
+     */
     private void SetPanelSize() {
         size = new Dimension(640, 800);
         setMinimumSize(size);
@@ -40,6 +55,11 @@ public class GameScreen extends JPanel {
         setMaximumSize(size);
     }
 
+    /** metoda paintComponent sluzy do renderowania
+     *
+     * @param g
+     * @return nic nie zwraca
+     */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 

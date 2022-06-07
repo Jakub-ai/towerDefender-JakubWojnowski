@@ -7,7 +7,9 @@ import inputs.MyMouseListener;
 import managers.TileManager;
 import scenes.*;
 
-
+/** klasa Game jest to klasa Main dla calej gry
+ *
+ */
 public class Game extends JFrame implements Runnable{
 private GameScreen gameScreen;
 private Thread gameThread;
@@ -26,6 +28,9 @@ private final double UPS_SET = 60.0;
 
     private TileManager tileManager;
 
+    /** konstruktor klasy game ktory inicjuje wszystkie waazne funkcje dla gry
+     *
+     */
     public Game(){
         initClasses();
         createDefaultLevel();
@@ -40,6 +45,9 @@ private final double UPS_SET = 60.0;
         setVisible(true);
     }
 
+    /** metoda createDefaultLevel tworzy standarwowa mape
+     * @return nic nie zwraca
+     */
     private void createDefaultLevel() {
 
         int [] arr = new int[400];
@@ -48,6 +56,9 @@ private final double UPS_SET = 60.0;
         LoadSave.CreateLevel("new_level", arr);
     }
 
+    /** metoda initClasses inicjuje klasy
+     * @return nic nie zwraca
+     */
     private void initClasses() {
         tileManager = new TileManager();
         render = new Render(this);
@@ -61,12 +72,18 @@ private final double UPS_SET = 60.0;
 
     }
 
+    /** metoda start uruchamiajaca thready dla gry
+     *
+     */
     private void start(){
         gameThread = new Thread(this) {};
        gameThread.start();
     }
 
-
+    /**
+     * metoda updateGame init update dla gamestates
+     * @return nic nie zwraca
+     */
     private void updateGame() {
 
        switch(GameStates.gameState){
@@ -84,6 +101,11 @@ private final double UPS_SET = 60.0;
        }
     }
 
+    /** metoda main uruchamiajaca gre
+     *
+     * @param args
+     * @return nic nie zwraca
+     */
     public static void main(String[] args){
         System.out.println("start Game!!!");
         Game game = new Game();
@@ -92,6 +114,9 @@ private final double UPS_SET = 60.0;
 
     }
 
+    /** metoda run stabilizuje liczbe FPS oraz UPS
+     * @retun nic nie zwraca
+     */
     @Override
     public void run() {
 
@@ -137,35 +162,62 @@ private final double UPS_SET = 60.0;
 
 
     }
+
+    /** metoda getRender zwraca render
+     *
+     * @return render
+     */
     //getters and setters
     public Render getRender(){
         return render;
     }
 
+    /** metoda getMenu zwraca menu
+     *
+     * @return menu
+     */
     public Menu getMenu() {
         return menu;
     }
 
-
+    /** metoda getPlaying zwraca playing
+     *
+     * @return playing
+     */
 
     public Playing getPlaying() {
         return playing;
     }
 
 
-
+    /** metoda getSettings zwraca settings
+     *
+     * @return settings
+     */
     public Settings getSettings() {
         return settings;
     }
 
+    /** metoda getEditor zwraca editing
+     *
+     * @return editing
+     */
     public Editing getEditor(){
         return editing;
     }
 
+    /** metoda getTileManager zwraca tileManager
+     *
+     * @return tileManager
+     */
     public TileManager getTileManager(){
         return tileManager;
     }
 
+    /** metoda getGameOver zwraca gameOver
+     *
+     * @return gameOver
+     */
     public GameOver getGameOver() {
         return gameOver;
     }

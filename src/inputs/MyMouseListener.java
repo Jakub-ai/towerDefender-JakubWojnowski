@@ -8,14 +8,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * klasa MyMouseListener sluzy do trzymania wszystkich metod zwiazanych z MouseListener
+ */
 public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     private Game game;
 
+    /**
+     * konstruktor klasy MyMouseListener
+     * @param game
+     */
     public MyMouseListener(Game game) {
         this.game = game;
     }
 
+    /**
+     * metoda mouseClicked dzieki ktorej naciskam na przycisk
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
     if(e.getButton() == MouseEvent.BUTTON1){
@@ -42,6 +53,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     }
         }
 
+    /**
+     * metoda mousePressed dziki ktorej zmienia sie game state
+     * @param e
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         switch (GameStates.gameState) {
@@ -66,6 +81,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     }
 
+    /** metoda mouseReleased sluzy do eventu puszczenia przycisku
+     *
+     * @param e
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         switch (GameStates.gameState) {
@@ -100,6 +119,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     }
 
+    /** metoda mouseDragged sluzy do eventu przeciagania myszki
+     *
+     * @param e
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
         switch (GameStates.gameState) {
@@ -121,6 +144,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     }
 
+    /** metoda mouseMoved slyzaca do sluzy do eventu ruszenia myszki
+     *
+     * @param e
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
 

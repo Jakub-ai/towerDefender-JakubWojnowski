@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+/** klasa render pozwala renderowac gameStates
+ *
+ */
 public class Render {
 
 
@@ -18,6 +21,11 @@ public class Render {
 
     }
 
+    /** metoda render pozwala renderowac gameState na inny gameState np playing
+     *
+     * @param g
+     * @return nic nie zwraca
+     */
     public void render(Graphics g){
 
         switch(GameStates.gameState){
