@@ -85,7 +85,7 @@ public class LoadSave {
      * @param " name, idArr, start, end "
      * @return nic nie zwraca
      */
-    public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end){
+   public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end){
         File levelFile = new File("res/" + name + ".txt");
 
         if(levelFile.exists()){

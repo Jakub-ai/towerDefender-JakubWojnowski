@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import static helpz.Constants.Projectiles.*;
 import static helpz.Constants.Towers.*;
 
+/** klasa ProjectileManager w ktorej znajduja sie wszystkie metody zwiazane z pociskami
+ *
+ */
 public class ProjectileManager {
 
     private Playing playing;
@@ -23,15 +26,20 @@ public class ProjectileManager {
     private BufferedImage[] projImgs, exploImgs;
     private int projId = 0;
 
-
+    /** kontruktor klasy ProjectileManager
+     *
+     * @param playing
+     */
     public ProjectileManager(Playing playing) {
         this.playing = playing;
         importImgs();
 
     }
 
-
-
+    /**
+     * metoda importImgs importuje textury pociskow do tablicy projImgs
+     * @return nic nie zwraca
+     */
     public void importImgs(){
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         projImgs = new BufferedImage[4];
@@ -45,6 +53,11 @@ public class ProjectileManager {
 
     }
 
+    /**
+     * metoda importExplosion importuje textury wybuchow do tablicy exploImgs
+     * @param atlas
+     * @return nic nie zwraca
+     */
     private void importExplosion(BufferedImage atlas) {
         exploImgs = new BufferedImage[7];
         //exploImgs[7] = atlas.getSubimage(9*32, 3*32,32,32);
@@ -53,6 +66,13 @@ public class ProjectileManager {
         }
     }
 
+    /** metoda newProjectile
+     * tworzy obiekt typu pocisk, zajmuje sie jego mechanika dla poszczegolnego rodzaju pocisku
+     * w tym przypadku pocisk rakieta oraz strzala obracaja sie w strone obiektu typu Enemy
+     * okresla predkosc
+     * @param t
+     * @param e
+     */
     public void newProjectile(Tower t, Enemy e){
         int type = getProjType(t);
 
@@ -95,7 +115,9 @@ public class ProjectileManager {
     }
 
 
-
+    /** metoda update aktualizuje pozycje pocisku i likwiduje pocisk kiedy jest poza mapa dla lepszej optymalizacji gry
+     * @return nic nie zwraca
+     */
     public void update(){
         for(Projectile p : projectiles)
             if(p.isActive()){
@@ -117,8 +139,11 @@ public class ProjectileManager {
 
     }
 
-
-
+    /** metoda explodeOnEnemies zajmuje jest odpowiedzialne za efekt wybuchu w momencie kolizji pbiektu pocisk z obiektem wrog
+     * dodatkowo gdy inne obiekt sa w zasiegu wybuchu otrzymuja obrazenia
+     *
+     * @param p
+     */
     private void explodeOnEnemies(Projectile p) {
         for( Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
@@ -133,6 +158,12 @@ public class ProjectileManager {
             }
         }
     }
+
+    /** metoda isProjOutsideBounds sprawdza czy obiekt pocisku jest poza mapa
+     *
+     * @param p
+     * @return true or false
+     */
     private boolean isProjOutsideBounds(Projectile p) {
         if(p.getPos().x >= 0)
             if(p.getPos().x <= 640)
@@ -142,6 +173,12 @@ public class ProjectileManager {
         return true;
 
     }
+
+    /** metoda isProjHittingEnemy sprawdza czy pocisk ma kolizje z obiektem wrog
+     *
+     * @param p
+     * @return true or false
+     */
     private boolean isProjHittingEnemy(Projectile p) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
@@ -156,7 +193,11 @@ public class ProjectileManager {
             return false;
         }
 
-
+    /** metoda draw wyswietla pociski na mapie oraz zajmuje sie obrotem pociskow arrow i missle
+     *
+     * @param g
+     * @return nic nie zwraca
+     */
     public void draw(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
