@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import static main.GameStates.*;
 
-
+/** klasa Menu zajmuje sie charakterystyka main Menu
+ *
+ */
 public class Menu extends GameScene implements SceneMethods {
 
     private MyButton bPlaying, bEdit, bSettings, bQuit;
@@ -22,6 +24,9 @@ public class Menu extends GameScene implements SceneMethods {
         initButtons();
     }
 
+    /** metoda initButtons inicjuje przyciski
+     *
+     */
     private void initButtons() {
         int w = 150;
         int h = w / 3;
@@ -35,6 +40,10 @@ public class Menu extends GameScene implements SceneMethods {
         bQuit = new MyButton("Quit", x, y + yOffset * 3, w, h);
     }
 
+    /** metoda render renderuje przyciski
+     *
+     * @param g graphics
+     */
     @Override
     public void render(Graphics g) {
         g.setColor(Color.WHITE);
@@ -43,6 +52,11 @@ public class Menu extends GameScene implements SceneMethods {
 
     }
 
+    /** metoda mouseClicked obsluguje zdarzenie nacisniecie przycisku myszy na przycisku
+     * zmieniamy sekwencje z menu na PLAYING, EDIT lub SETTINGS
+     * @param x
+     * @param y
+     */
     @Override
     public void mouseClicked(int x, int y) {
         if (bPlaying.getBounds().contains(x, y)) {
@@ -56,6 +70,11 @@ public class Menu extends GameScene implements SceneMethods {
 
     }
 
+    /** metoda mouseMoved obsluguje zdarzenie mouseover czyli feedback wizualny ze myszka jest nad przyciskiem
+     *
+     * @param x koordynaty
+     * @param y koordyanty
+     */
     @Override
     public void mouseMoved(int x, int y) {
         bPlaying.setMouseOver(false);
@@ -74,6 +93,11 @@ public class Menu extends GameScene implements SceneMethods {
         }
     }
 
+    /** metoda mousepressed daje nam feedback wizualny po nacisnieciu przycisku
+     *
+     * @param x koordynaty
+     * @param y koordynaty
+     */
     @Override
     public void mousePressed(int x, int y) {
         if (bPlaying.getBounds().contains(x, y)) {
@@ -87,6 +111,11 @@ public class Menu extends GameScene implements SceneMethods {
         }
     }
 
+    /** metoda mouseReleased restuje efekty wizualne przycisku
+     *
+     * @param x koordynaty
+     * @param y koordynaty
+     */
     @Override
     public void mouseReleased(int x, int y) {
         resetButtons();
@@ -98,6 +127,9 @@ public class Menu extends GameScene implements SceneMethods {
 
     }
 
+    /** metoda resetButtons resetuje przyciski
+     *
+     */
     private void resetButtons() {
         bPlaying.resetBooleans();
         bEdit.resetBooleans();
@@ -105,6 +137,10 @@ public class Menu extends GameScene implements SceneMethods {
         bQuit.resetBooleans();
     }
 
+    /** metoda drawButtons wyswietla nam przyciski
+     *
+     * @param g graphics
+     */
     private void drawButtons(Graphics g) {
         bPlaying.draw(g);
         bEdit.draw(g);

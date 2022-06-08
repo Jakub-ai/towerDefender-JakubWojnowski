@@ -36,13 +36,10 @@ public class EnemyManager {
         this.start = start;
         this.end = end;
         loadEffectImg();
-//        addEnemy( GHOST);
-//        addEnemy( BAT);
-//        addEnemy( SKELETON);
-//        addEnemy( KNIGHT);
+
 
         enemyImgs = new BufferedImage[4];
-       // testEnemy = new Enemy(32*3, 32*9,0,0);
+
 
 
         loadEnemyImgs();

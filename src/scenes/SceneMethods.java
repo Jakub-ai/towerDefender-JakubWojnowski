@@ -2,6 +2,9 @@ package scenes;
 
 import java.awt.*;
 
+/** interface klasa wymusza na klasach impplementujace interface umieszczenie koordynatow x y
+ *
+ */
 public interface SceneMethods {
 
     public void render(Graphics g);

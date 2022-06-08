@@ -223,12 +223,22 @@ public class ProjectileManager {
 
     }
 
+    /** metoda drawExplosions wyswietla efekt eksplozi
+     *
+     * @param g2d
+     * @return nic nie zwraca
+     */
     private void drawExplosions(Graphics2D g2d) {
         for (Explosion e : explosions)
             if(e.getExploIndex() < 7)
                 g2d.drawImage(exploImgs[e.getExploIndex()], (int)e.getPos().x-16, (int)e.getPos().y-16, null);
     }
 
+    /**
+     * getProjType metoda zwraca typ pociskow odpowiedni dla towera
+     * @param t
+     * @return arrow or bomb or missle or chains or 0
+     */
     private int getProjType(Tower t) {
         switch (t.getTowerType()) {
             case ARCHER:
@@ -243,13 +253,25 @@ public class ProjectileManager {
         return 0;
     }
 
+    /** sub -klasa Explosion sluzy do animacji eksplozji
+     *
+     */
     public class Explosion{
         private Point2D.Float pos;
         private int exploTick = 0, exploIndex = 0;
+
+        /** konstruktor klasy Explosion
+         *
+         * @param pos
+         */
         public Explosion(Point2D.Float pos) {
             this.pos = pos;
 
         }
+
+        /** metoda update aktualizuja animacje eksplozji
+         * @return "nic nie zwraca"
+         */
         public void update(){
 
                 exploTick++;
@@ -261,14 +283,27 @@ public class ProjectileManager {
                     }
                 }
 
+        /** metoda getExploIndex zwraca index animacji explozji
+         *
+         * @return exploIndex
+         */
         public int getExploIndex(){
             return exploIndex;
         }
+
+        /** metoda getPos zwraca pozycje explozji
+         *
+          * @return pos
+         */
         public Point2D.Float getPos(){
             return pos;
         }
 
     }
+
+    /** metoda reset resetuje wszystko
+     * @return nic nie zwraca
+     */
     public void reset(){
         projectiles.clear();
         explosions.clear();
