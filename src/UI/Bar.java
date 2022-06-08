@@ -4,9 +4,19 @@ import scenes.Playing;
 
 import java.awt.*;
 
+/** klasa Bar ustala charakterystyke obiektu Bar ktorym jest np. actionBar
+ *
+ */
 public class Bar {
     protected int  x, y, width, height;
 
+    /** konstruktor klasy Bar
+     *
+     * @param x koordynat
+     * @param y koordynat
+     * @param width wysokosc
+     * @param height szerokosc
+     */
     public Bar(int  x, int y, int width, int height) {
 
         this.x = x;
@@ -16,6 +26,12 @@ public class Bar {
 
         //initButtons();
     }
+
+    /** metoda drawButtonFeedback okresla nam jak dziala efekt wizualny akcji zwiazanej z przyciskiem
+     *
+     * @param g Graphics
+     * @param b MyButton to kalsa w ktorej okreslona jest charakterystyka przycisku
+     */
     protected void drawButtonFeedback(Graphics g, MyButton b){
         //Mouseover
         if(b.isMouseOver())

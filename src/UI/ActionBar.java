@@ -10,6 +10,9 @@ import scenes.Playing;
 
 import static main.GameStates.*;
 
+/** klasa ActionBar zajmuje sie panelem pod mapa w trybie playing na ktorym sa wyswietlane rozne informacje co do rozgrywki oraz wieze do kupienia przez gracza
+ *
+ */
 public class ActionBar extends Bar{
 
     private Playing playing;
@@ -25,6 +28,15 @@ public class ActionBar extends Bar{
     private int lives = 5;
 
     private MyButton[] towerButtons;
+
+    /** konstruktor klasy ActionBar
+     *
+     * @param x koyrdynat
+     * @param y koyrdynat
+     * @param width szerokosc
+     * @param height wysokosc
+     * @param playing tryb
+     */
     public ActionBar(int  x, int y, int width, int height, Playing playing ) {
 
         super(x,y,width,height);
@@ -33,6 +45,10 @@ public class ActionBar extends Bar{
 
         initButtons();
    }
+
+    /** metoda sluzy do resetowania wszystkich czynnosci
+     *
+     */
     public void resetEverything() {
         lives = 10;
         towerCostType = 0;
@@ -42,6 +58,10 @@ public class ActionBar extends Bar{
         displayedTower = null;
 
     }
+
+    /** metoda initButtons inicjuje przyciski oraz okresla jego wielkosc i pozycje
+     *
+     */
     private void initButtons() {
         bMenu = new MyButton("Menu", 2, 642, 100, 30);
         bPause = new MyButton("Pause", 2, 682,100,30);
@@ -61,12 +81,20 @@ public class ActionBar extends Bar{
 
 
     }
+
+    /** metoda removeOneLive sluzy do odejmowania zyc gracza
+     *
+     */
     public void removeOneLive(){
         lives--;
         if(lives <= 0)
             SetGameState(GAME_OVER);
     }
 
+    /** metoda drawButtons sluzy do wyswietlania przyciskow
+     *
+     * @param g Graphics
+     */
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
         bPause.draw(g);
@@ -79,7 +107,10 @@ public class ActionBar extends Bar{
         }
         }
 
-
+    /** metoda draw sluzy do wyswietlania informacji zwiazanych z rozgrywka. takie jak informacja o obiekcie tower
+     *
+     * @param g Graphics
+     */
     public void draw(Graphics g){
 
         //background
@@ -112,6 +143,10 @@ public class ActionBar extends Bar{
         g.drawString("Lives: " + lives, 110,750);
 }
 
+    /** drawTowerCost metoda wyswietla koszt wykupienia obiektu tower i sprawdza czy gracz ma wystarczajaca sume
+     *
+     * @param g Graphics
+     */
     private void drawTowerCost(Graphics g) {
         g.setColor(Color.gray);
         g.fillRect(205,705,140,80);
@@ -131,24 +166,44 @@ public class ActionBar extends Bar{
 
     }
 
+    /** isTowerCostMoreThanCurrentGold sprawdza czy koszt obiektu tower jest wyzszy od posiadanego zlota przez gracza
+     *
+     * @return  getTowerCostValue() > gold
+     */
     private boolean isTowerCostMoreThanCurrentGold() {
         return getTowerCostValue() > gold;
     }
 
+    /** metoda getTowerCostValue pobiera koszt obiektu tower
+     *
+     * @return towerCostType
+     */
     private int getTowerCostValue() {
         return Constants.Towers.GetTowerCost(towerCostType);
     }
 
+    /** metoda getTowerCostName pobiera nazwe obiektu typu tower
+     *
+     * @return Constants.Towers.GetName(towerCostType)
+     */
     private String getTowerCostName() {
         return Constants.Towers.GetName(towerCostType);
     }
 
+    /** metoda drawGoldAmount wyswietla poziom zlota posiadanego przez gracza
+     *
+     * @param g Graphics
+     */
     private void drawGoldAmount(Graphics g) {
         g.setColor(Color.YELLOW);
         g.drawString("Gold: " + gold, 110,725);
 
     }
 
+    /** drawWaveInfo wyswietla informacje zwiazane z falami przeciwnikow takie jak timer, ilosc fal i ile zostalo czasu
+     *
+     * @param g Graphics
+     */
     private void drawWaveInfo(Graphics g) {
         g.setFont(new Font("LucidaSans",Font.BOLD,20));
         g.setColor(new Color(80,3,60));
@@ -158,18 +213,30 @@ public class ActionBar extends Bar{
 
     }
 
+    /** metoda drawWavesLeftInfo okresla w jaki sposob ilosc fal jest obliczana oraz gdzie jest to wyswietlane
+     *
+     * @param g Graphics
+     */
     private void drawWavesLeftInfo(Graphics g) {
         int current = playing.getWaveManager().getWaveIndex();
         int size = playing.getWaveManager().getWaves().size();
         g.drawString("Wave " + (current + 1 )+ "/" + size, 425, 770 );
     }
 
+    /** okresla w jaki sposob jest wyswietlana informacja o ilosci pozostalych wrogow
+     *
+     * @param g Graphics
+     */
     private void drawEnemiesLeftInfo(Graphics g) {
         int remaining = playing.getEnemyManager().getAmountofAliveEnemies();
         g.drawString("Enemies Left: " + remaining, 425, 790);
         
     }
 
+    /** metoda drawWaveTimerInfo okresla w jaki sposob jest wyswietlana informacja o timerze
+     *
+     * @param g Graphics
+     */
     private void drawWaveTimerInfo(Graphics g){
         if(playing.getWaveManager().isWaveTimerStarted()){
 
@@ -183,6 +250,10 @@ public class ActionBar extends Bar{
 
     }
 
+    /** metoda drawDisplayedTower zajmuje sie wyswietlaniem wszelkich informacji zwiazancyh z obiektem typu tower
+     * oraz rysuje nam zasieg obiekt na mapie, podswietla nam kwadracik dookola wiezy oraz wyswietla nam przyciski sell oraz upgrade
+     * @param g
+     */
     private void drawDisplayedTower(Graphics g) {
         if(displayedTower != null){
             g.setColor(Color.gray);
@@ -229,32 +300,55 @@ public class ActionBar extends Bar{
 
     }
 
+    /** getUpgradeAmount metoda zwraca nam koszt upgradu wiezy czyli dokladnie x * 0.3 wartosci
+     *
+     * @param displayedTower
+     * @return (int)(Constants.Towers.GetTowerCost(displayedTower.getTowerType()) * 0.3f)
+     */
     private int getUpgradeAmount(Tower displayedTower) {
         return (int)(Constants.Towers.GetTowerCost(displayedTower.getTowerType()) * 0.3f);
     }
 
+    /** metoda zwraca przychod za sprzedaz wiezy czyli dokladnie polowe
+     *
+     * @param displayedTower
+     * @return Constants.Towers.GetTowerCost(displayedTower.getTowerType()) / 2 + upgradeCost
+     */
     private int getSellAmount(Tower displayedTower) {
         int upgradeCost = (displayedTower.getTier() -1) * getUpgradeAmount(displayedTower);
         upgradeCost *= 0.5f;
         return Constants.Towers.GetTowerCost(displayedTower.getTowerType()) / 2 + upgradeCost;
     }
 
+    /** metoda drawDisplayedTowerRange sluzy do rysowania okregu ktory wizualizuje zasieg wiezy
+     *
+     * @param g Graphics
+     */
     private void drawDisplayedTowerRange(Graphics g) {
         g.setColor(Color.WHITE);
         g.drawOval(displayedTower.getX() + 16 - (int) (displayedTower.getRange()*2) / 2,displayedTower.getY() + 16 - (int)(displayedTower.getRange()*2) /2,(int)displayedTower.getRange()*2,(int)displayedTower.getRange()* 2);
     }
 
-    //ta metoda zmienia kolor granic wiezy po jej wybraniu. dzieki czemu wiemy ktora wieze wybralismy z mapy
+    /** metoda drawDisplayedTowerBorder sluzy do podswietlenia granic kwadracika na ktorym jest wieza
+     *
+     * @param g
+     */
     private void drawDisplayedTowerBorder(Graphics g) {
         g.setColor(Color.WHITE);
         g.drawRect(displayedTower.getX(), displayedTower.getY(), 32,32);
     }
 
-    // w ta metoda przechowuje wieze ktora wybralismy w sekwencji playing i jest przesylana do Actionbar dzieki czemu mozemy ją uzyc w innych metodach
+    /**  metoda displayedTower przechowuje wieze ktora wybralismy w sekwencji playing i jest przesylana do Actionbar dzieki czemu mozemy ją uzyc w innych metodach
+     *
+     * @param t
+     */
     public void displayedTower(Tower t) {
         displayedTower = t;
     }
 
+    /** metoda sellTowerClicked sluzy do okreslenia mechaniki sprzedazy naszej postawionej wiezy
+     *
+     */
     private void sellTowerClicked() {
 
         playing.removeTower(displayedTower);
@@ -264,6 +358,10 @@ public class ActionBar extends Bar{
         gold += upgradeCost;
         displayedTower = null;
     }
+
+    /** togglePause metoda wyswietla nam informacje ze gra jest zatrzymana
+     *
+     */
     private void togglePause() {
         playing.setGamePaused(!playing.isGamePaused());
         if(playing.isGamePaused())
@@ -272,10 +370,20 @@ public class ActionBar extends Bar{
             bPause.setText("Pause");
 
     }
+
+    /** metoda upgradeTowerClicked sluzy do odejmowania zlota w momencie upgradowania wiezy
+     *
+     */
     private void upgradeTowerClicked() {
         playing.upgradeTower(displayedTower);
         gold -= getUpgradeAmount(displayedTower);
     }
+
+    /** metoda mouseClicked zajmuje sie zdarzeniem mouseClicek w kontekscie przycisku np MENU lub przycisku reprezentujacy wieze
+     *
+     * @param x koordynaty
+     * @param y koordynaty
+     */
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             SetGameState(MENU);
@@ -311,14 +419,21 @@ public class ActionBar extends Bar{
     }
 
 
-
-
+    /** metoda isGoldEnoughForTower sprawdza czy ilosc posiadanego zlota jest wystarczajaca do kupienia wiezy
+     *
+     * @param towerCostType
+     * @return gold >= Constants.Towers.GetTowerCost(towerCostType)
+     */
     private boolean isGoldEnoughForTower(int towerCostType) {
         return gold >= Constants.Towers.GetTowerCost(towerCostType);
 
     }
 
-
+    /** metoda mouseMoved zjamuje sie zdarzeniem ruchu myszki. kiedy kursor jest nad przyciskiem dostajemy feedback reprezentowany w sposob graficzny
+     *
+     * @param x koordynat
+     * @param y koordynat
+     */
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
         bPause.setMouseOver(false);
@@ -353,7 +468,11 @@ public class ActionBar extends Bar{
         }
     }
 
-
+    /** metoda mousePressed zajmuje sie zdarzeniem mousePressed. w momencie kiedy klikamy na przycisk otrzymyjemy feedback rezprezentowany graficznie
+     *
+     * @param x koordynat
+     * @param y koordynat
+     */
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y))
             bMenu.setMousePressed(true);
@@ -381,7 +500,11 @@ public class ActionBar extends Bar{
 
     }
 
-
+    /** mouseReleased metoda resetuje efekt wizualny zwiazany z mousepressed
+     *
+     * @param x koordynat
+     * @param y koordynat
+     */
     public void mouseReleased(int x, int y) {
         bMenu.resetBooleans();
         bPause.resetBooleans();
@@ -392,11 +515,18 @@ public class ActionBar extends Bar{
         upgradeTower.resetBooleans();
     }
 
-
+    /** metoda ktora odejmuje nam z konta ilosc zlota za kupienie wiezy
+     *
+     * @param towerType typ wiezy
+     */
     public void payForTower(int towerType) {
         this.gold -= Constants.Towers.GetTowerCost(towerType);
     }
 
+    /** metoda ktora dodaje nam zlota w nagrode
+     *
+     * @param getReward dodanie zlota
+     */
     public void addGold(int getReward) {
         this.gold += getReward;
     }

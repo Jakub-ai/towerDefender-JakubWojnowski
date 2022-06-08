@@ -91,7 +91,7 @@ public class Constants {
                 case ARCHER:
                     return 125;
                 case MAGE:
-                    return 130;
+                    return 60;
                 case BAZOOKA:
                     return 150;
             }
